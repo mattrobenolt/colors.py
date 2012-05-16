@@ -78,7 +78,8 @@ class HSVColor(Color):
     """ Hue Saturation Value """
 
     def __init__(self, h=0, s=0, v=0):
-        self._color = h, s, v
+        # No values can be greater than 1
+        self._color = map(lambda c: c - 1 if c >= 1 else c, (h, s, v))
 
     @property
     def rgb(self):
@@ -97,6 +98,9 @@ class RGBColor(Color):
 
     def __init__(self, r=0, g=0, b=0):
         self._color = r, g, b
+        for c in self._color:
+            if c < 0 or c > 255:
+                raise ValueError('Color values must be between 0 and 255')
 
     @property
     def rgb(self):
@@ -159,6 +163,9 @@ class ColorWheel(object):
 
     """
     def __init__(self, start=0):
+        # A 1.1 shift is identical to 0.1
+        if start >= 1:
+            start -= 1
         self._phase = start
 
     def __iter__(self):
@@ -167,7 +174,7 @@ class ColorWheel(object):
     def next(self):
         shift = (random_.random() * 0.1) + 0.1
         self._phase += shift
-        if self._phase > 1:
+        if self._phase >= 1:
             self._phase -= 1
         return HSVColor(self._phase, 1, 0.8)
 
