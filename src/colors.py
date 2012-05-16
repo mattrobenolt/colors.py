@@ -45,6 +45,16 @@ class Color(object):
     def hsv(self):
         raise NotImplemented
 
+    def __eq__(self, other):
+        self_rgb = self.rgb
+        other_rgb = other.rgb
+        return self_rgb.red == other_rgb.red \
+           and self_rgb.green == other_rgb.green \
+           and self_rgb.blue == other_rgb.blue
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
     def __iter__(self):
         """ Treat the color object as an iterable to iterate over color values
         Allows mapping such as:
