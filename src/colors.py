@@ -88,8 +88,16 @@ class HSVColor(Color):
     """ Hue Saturation Value """
 
     def __init__(self, h=0, s=0, v=0):
-        # No values can be greater than 1
-        self._color = map(lambda c: c - 1 if c >= 1 else c, (h, s, v))
+        if s > 1:
+            raise ValueError('Saturation has to be less than 1')
+        if v > 1:
+            raise ValueError('Value has to be less than 1')
+
+        # Hue can safely circle around 1
+        if h >= 1:
+            h -= 1
+
+        self._color = h, s, v
 
     @property
     def rgb(self):
