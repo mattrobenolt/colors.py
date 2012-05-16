@@ -2,7 +2,7 @@
 Convert colors between rgb, hsv, and hex, and generating random colors within boundaries
 ## Installation
 ```$ pip install ...```
-## Usages
+## Basic Uses
 ### Importing
 ```python
 >>> from colors import rgb, hsv, hex, random
@@ -73,4 +73,23 @@ Convert colors between rgb, hsv, and hex, and generating random colors within bo
 True
 >>> hsv(0, 1, 1) == rgb(255, 0, 0)
 True
+```
+## The Color Wheel!
+The color wheel allows you to randomly choose colors while keeping the colors relatively evenly distributed. Think generating random colors without pooling in one hue, e.g., not 50 green, and 1 red.
+```python
+>>> from colors import ColorWheel
+>>> wheel = ColorWheel()
+```
+### Iterate the wheel to get the next value
+ColorWheel is an iterable, but be careful if using inside any type of loop. It will iterate forever until you interject.
+```python
+>>> wheel.next()
+<HSVColor hue: 0.177410230076, saturation: 1, value: 0.8>
+>>> wheel.next()
+<HSVColor hue: 0.278803914372, saturation: 1, value: 0.8>
+>>> for color in wheel:
+...   print color.hex
+00cca4
+002ecc
+# Forever and ever and ever and ever
 ```
