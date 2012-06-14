@@ -1,7 +1,7 @@
 # colors.py
 Convert colors between rgb, hsv, and hex, perform arithmetic, blend modes, and generate random colors within boundaries
 ## Installation
-```$ pip install ...```
+```$ pip install colors.py```
 ## Basic Uses
 ### Importing
 ```python
