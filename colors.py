@@ -8,7 +8,7 @@ import random as random_
 
 __version__ = '0.0.0'
 __all__ = ('Color', 'HSVColor', 'RGBColor', 'HexColor', 'ColorWheel',
-           'rgb', 'hsv', 'hex', 'random',)
+           'rgb', 'hsv', 'hex', 'random', 'BLACK', 'WHITE')
 
 
 class _ColorMetaClass(type):
@@ -112,7 +112,7 @@ class Color(object):
         return self.screen(self.multiply(other))
 
     def invert(self):
-        return self.difference(RGBColor(255, 255, 255))
+        return self.difference(WHITE)
 
     def __eq__(self, other):
         self_rgb = self.rgb
@@ -282,4 +282,7 @@ def random():  # This name might be a bad idea?
 # Simple aliases
 rgb = RGBColor  # rgb(100, 100, 100), or rgb(r=100, g=100, b=100)
 hsv = HSVColor  # hsv(0.5, 1, 1), or hsv(h=0.5, s=1, v=1)
-hex = HexColor  # hex(BADA55')
+hex = HexColor  # hex('BADA55')
+
+BLACK = rgb(0, 0, 0)
+WHITE = rgb(255, 255, 255)
