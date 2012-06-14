@@ -9,7 +9,7 @@ import random as random_
 
 __version__ = '0.0.0'
 __all__ = ('Color', 'HSVColor', 'RGBColor', 'HexColor', 'ColorWheel',
-           'rgb', 'hsv', 'hex', 'random', 'BLACK', 'WHITE')
+           'rgb', 'hsv', 'hex',)
 
 
 class _ColorMetaClass(type):
