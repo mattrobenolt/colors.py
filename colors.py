@@ -17,7 +17,6 @@ class _ColorMetaClass(type):
 
     >>> RGBColor(r=150, g=0, b=100).red
     150
-
     """
     def __new__(cls, name, bases, attrs):
         # Check for internal Meta class providing a property map
@@ -45,12 +44,85 @@ class Color(object):
     def hsv(self):
         raise NotImplemented
 
+    def multiply(self, other):
+        self_rgb = self.rgb
+        other_rgb = other.rgb
+        return RGBColor(
+            self_rgb.red * other_rgb.red / 255.0,
+            self_rgb.green * other_rgb.green / 255.0,
+            self_rgb.blue * other_rgb.blue / 255.0
+        )
+
+    __mul__ = multiply
+
+    def add(self, other):
+        self_rgb = self.rgb
+        other_rgb = other.rgb
+        return RGBColor(
+            min(255, self_rgb.red + other_rgb.red),
+            min(255, self_rgb.green + other_rgb.green),
+            min(255, self_rgb.blue + other_rgb.blue),
+        )
+
+    __add__ = add
+
+    def divide(self, other):
+        self_rgb = self.rgb
+        other_rgb = other.rgb
+        if 0 in other_rgb:
+            raise ZeroDivisionError
+        return RGBColor(
+            self_rgb.red / float(other_rgb.red),
+            self_rgb.green / float(other_rgb.green),
+            self_rgb.blue / float(other_rgb.blue),
+        )
+
+    __div__ = divide
+
+    def subtract(self, other):
+        self_rgb = self.rgb
+        other_rgb = other.rgb
+        return RGBColor(
+            max(0, (self_rgb.red - other_rgb.red)),
+            max(0, (self_rgb.green - other_rgb.green)),
+            max(0, (self_rgb.blue - other_rgb.blue)),
+        )
+
+    __sub__ = subtract
+
+    def screen(self, other):
+        self_rgb = self.rgb
+        other_rgb = other.rgb
+        return RGBColor(
+            255 - (((255 - self_rgb.red) * (255 - other_rgb.red)) / 255.0),
+            255 - (((255 - self_rgb.green) * (255 - other_rgb.green)) / 255.0),
+            255 - (((255 - self_rgb.blue) * (255 - other_rgb.blue)) / 255.0),
+        )
+
+    def difference(self, other):
+        self_rgb = self.rgb
+        other_rgb = other.rgb
+        return RGBColor(
+            abs(self_rgb.red - other_rgb.red),
+            abs(self_rgb.green - other_rgb.green),
+            abs(self_rgb.blue - other_rgb.blue),
+        )
+
+    def overlay(self, other):
+        return self.screen(self.multiply(other))
+
+    def invert(self):
+        return self.difference(RGBColor(255, 255, 255))
+
     def __eq__(self, other):
         self_rgb = self.rgb
         other_rgb = other.rgb
         return self_rgb.red == other_rgb.red \
            and self_rgb.green == other_rgb.green \
            and self_rgb.blue == other_rgb.blue
+
+    def __contains__(self, item):
+        return item in self._color
 
     def __ne__(self, other):
         return not self.__eq__(other)
@@ -65,7 +137,6 @@ class Color(object):
         100
         50
         0
-
         """
         return iter(self._color)
 
@@ -178,7 +249,6 @@ class ColorWheel(object):
     #00cc26
     >>> print '#%s' % wheel.next().hex
     #009ecc
-
     """
     def __init__(self, start=0):
         # A 1.1 shift is identical to 0.1
