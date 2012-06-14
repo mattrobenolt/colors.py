@@ -5,7 +5,7 @@ Convert colors between rgb, hsv, and hex, perform arithmetic, blend modes, and g
 ## Basic Uses
 ### Importing
 ```python
->>> from colors import rgb, hsv, hex, random, BLACK, WHITE, RED, GREEN, BLUE
+>>> from colors import rgb, hsv, hex, random
 ```
 ### Create an RGB color object
 ```python
@@ -74,13 +74,6 @@ True
 >>> hsv(0, 1, 1) == rgb(255, 0, 0)
 True
 ```
-### Use a constant (`BLACK`, `WHITE`, `RED`, `GREEN`, `BLUE`)
-```python
->>> BLACK
-<RGBColor red: 0, green: 0, blue: 0>
->>> WHITE.hex
-<HexColor red: ff, green: ff, blue: ff>
-```
 ## Arithmetic
 **Note**: All arithmetic operations return `rgb` color.
 ### Multiply
@@ -140,6 +133,26 @@ ZeroDivisionError
 ```python
 >>> hex('000000').invert()
 <RGBColor red: 255, green: 255, blue: 255>
+```
+## Color palettes
+`colors.py` current ships with three color palettes full of constants. See source for all available colors.
+### `colors.primary`
+```python
+>>> import colors.primary
+>>> colors.primary.red
+<RGBColor red: 255, green: 0, blue: 0>
+```
+### `colors.rainbow`
+```python
+>>> import colors.rainbow
+>>> colors.rainbow.indigo
+<RGBColor red: 75, green: 0, blue: 130>
+```
+### `colors.w3c`
+```python
+>>> import colors.w3c
+>>> colors.w3c.ghostwhite
+<RGBColor red: 248, green: 248, blue: 255>
 ```
 ## The Color Wheel!
 The color wheel allows you to randomly choose colors while keeping the colors relatively evenly distributed. Think generating random colors without pooling in one hue, e.g., not 50 green, and 1 red.

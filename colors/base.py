@@ -1,5 +1,5 @@
 """
-colors.py
+colors.base
 =========
 Convert colors between rgb, hsv, and hex, perform arithmetic, blend modes,
 and generate random colors within boundaries.
@@ -7,7 +7,6 @@ and generate random colors within boundaries.
 import colorsys
 import random as random_
 
-__version__ = '0.1.0'
 __all__ = ('Color', 'HSVColor', 'RGBColor', 'HexColor', 'ColorWheel',
            'rgb', 'hsv', 'hex',)
 
@@ -113,7 +112,7 @@ class Color(object):
         return self.screen(self.multiply(other))
 
     def invert(self):
-        return self.difference(WHITE)
+        return self.difference(RGBColor(255, 255, 255))
 
     def __eq__(self, other):
         self_rgb = self.rgb
@@ -284,9 +283,3 @@ def random():  # This name might be a bad idea?
 rgb = RGBColor  # rgb(100, 100, 100), or rgb(r=100, g=100, b=100)
 hsv = HSVColor  # hsv(0.5, 1, 1), or hsv(h=0.5, s=1, v=1)
 hex = HexColor  # hex('BADA55')
-
-BLACK = rgb(0, 0, 0)
-WHITE = rgb(255, 255, 255)
-RED = rgb(255, 0, 0)
-GREEN = rgb(0, 255, 0)
-BLUE = rgb(0, 0, 255)
