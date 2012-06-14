@@ -1,7 +1,8 @@
 """
 colors.py
 =========
-Play with colors!
+Convert colors between rgb, hsv, and hex, perform arithmetic, blend modes,
+and generate random colors within boundaries.
 """
 import colorsys
 import random as random_
