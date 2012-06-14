@@ -287,3 +287,6 @@ hex = HexColor  # hex('BADA55')
 
 BLACK = rgb(0, 0, 0)
 WHITE = rgb(255, 255, 255)
+RED = rgb(255, 0, 0)
+GREEN = rgb(0, 255, 0)
+BLUE = rgb(0, 0, 255)
