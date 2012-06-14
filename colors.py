@@ -7,7 +7,7 @@ and generate random colors within boundaries.
 import colorsys
 import random as random_
 
-__version__ = '0.0.0'
+__version__ = '0.1.0'
 __all__ = ('Color', 'HSVColor', 'RGBColor', 'HexColor', 'ColorWheel',
            'rgb', 'hsv', 'hex',)
 
