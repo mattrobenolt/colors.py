@@ -123,17 +123,17 @@ ZeroDivisionError
 **Note**: All blend modes return `rgb` color.
 ### Screen
 ```python
->>> hex('ff9999').screen(rgb(10,10,10)).hex
+>>> hex('ff9999').screen(rgb(10, 10, 10)).hex
 <HexColor red: ff, green: 9d, blue: 9d>
 ```
 ### Difference
 ```python
->>> hex('ff9999').screen(rgb(10,10,10)).hex
+>>> hex('ff9999').difference(rgb(10, 10, 10)).hex
 <HexColor red: f5, green: 8f, blue: 8f>
 ```
 ### Overlay
 ```python
->>> hex('ff9999').overlay(rgb(10,10,10)).hex
+>>> hex('ff9999').overlay(rgb(10, 10, 10)).hex
 <HexColor red: ff, green: 9b, blue: 9b>
 ```
 ### Invert
