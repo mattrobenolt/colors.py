@@ -1,11 +1,11 @@
 # colors.py
-Convert colors between rgb, hsv, and hex, and generating random colors within boundaries
+Convert colors between rgb, hsv, and hex, perform arithmetic, blend modes, and generate random colors within boundaries
 ## Installation
 ```$ pip install ...```
 ## Basic Uses
 ### Importing
 ```python
->>> from colors import rgb, hsv, hex, random
+>>> from colors import rgb, hsv, hex, random, BLACK, WHITE, RED, GREEN, BLUE
 ```
 ### Create an RGB color object
 ```python
@@ -73,6 +73,73 @@ Convert colors between rgb, hsv, and hex, and generating random colors within bo
 True
 >>> hsv(0, 1, 1) == rgb(255, 0, 0)
 True
+```
+### Use a constant (`BLACK`, `WHITE`, `RED`, `GREEN`, `BLUE`)
+```python
+>>> BLACK
+<RGBColor red: 0, green: 0, blue: 0>
+>>> WHITE.hex
+<HexColor red: ff, green: ff, blue: ff>
+```
+## Arithmetic
+**Note**: All arithmetic operations return `rgb` color.
+### Multiply
+```python
+>>> hex('ff9999') * hex('cccccc')
+<RGBColor red: 204.0, green: 122.4, blue: 122.4>
+>>> _.hex
+<HexColor red: cc, green: 7a, blue: 7a>
+>>> rgb(100, 100, 100).multiply(hsv(0, 1, 1)).hex
+>>> <HexColor red: 64, green: 00, blue: 00>
+```
+### Add
+```python
+>>> hex('ff9999') + rgb(10, 10, 10)
+<RGBColor red: 255, green: 163, blue: 163>
+>>> hex('aaffcc').add(rgb(10, 10, 10))
+<RGBColor red: 180, green: 255, blue: 214>
+```
+### Subtract
+```python
+>>> hex('ff9999') - rgb(10, 10, 10)
+<RGBColor red: 245, green: 143, blue: 143>
+>>> hex('aaffcc').subtract(rgb(10, 10, 10))
+<RGBColor red: 160, green: 245, blue: 194>
+```
+### Divide
+```python
+>>> hex('ff9999') / rgb(10, 10, 10)
+<RGBColor red: 25.5, green: 15.3, blue: 15.3>
+>>> hex('aaffcc').divide(rgb(10, 10, 10))
+<RGBColor red: 17.0, green: 25.5, blue: 20.4>
+>>> rgb(100, 100, 100) / hex('00ffff')
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "colors.py", line 73, in divide
+    raise ZeroDivisionError
+ZeroDivisionError
+```
+## Blend Modes
+**Note**: All blend modes return `rgb` color.
+### Screen
+```python
+>>> hex('ff9999').screen(rgb(10,10,10)).hex
+<HexColor red: ff, green: 9d, blue: 9d>
+```
+### Difference
+```python
+>>> hex('ff9999').screen(rgb(10,10,10)).hex
+<HexColor red: f5, green: 8f, blue: 8f>
+```
+### Overlay
+```python
+>>> hex('ff9999').overlay(rgb(10,10,10)).hex
+<HexColor red: ff, green: 9b, blue: 9b>
+```
+### Invert
+```python
+>>> hex('000000').invert()
+<RGBColor red: 255, green: 255, blue: 255>
 ```
 ## The Color Wheel!
 The color wheel allows you to randomly choose colors while keeping the colors relatively evenly distributed. Think generating random colors without pooling in one hue, e.g., not 50 green, and 1 red.
