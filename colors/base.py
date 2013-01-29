@@ -10,6 +10,8 @@ import random as random_
 __all__ = ('Color', 'HSVColor', 'RGBColor', 'HexColor', 'ColorWheel',
            'rgb', 'hsv', 'hex',)
 
+HEX_RANGE = frozenset('0123456789abcdef')
+
 
 class _ColorMetaClass(type):
     """
@@ -214,9 +216,8 @@ class HexColor(RGBColor):
             raise ValueError('Hex color must be 6 digits')
 
         hex = hex.lower()
-        for digit in hex:
-            if digit not in '0123456789abcdef':
-                raise ValueError('Not a valid hex number')
+        if not set(hex).issubset(HEX_RANGE):
+            raise ValueError('Not a valid hex number')
 
         self._color = hex[:2], hex[2:4], hex[4:6]
 
