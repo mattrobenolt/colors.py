@@ -168,7 +168,7 @@ class HSVColor(Color):
 
         # Hue can safely circle around 1
         if h >= 1:
-            h -= 1
+            h -= int(h)
 
         self._color = h, s, v
 
