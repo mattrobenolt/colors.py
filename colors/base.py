@@ -8,7 +8,7 @@ import colorsys
 import random as random_
 
 __all__ = ('Color', 'HSVColor', 'RGBColor', 'HexColor', 'ColorWheel',
-           'rgb', 'hsv', 'hex',)
+           'rgb', 'hsv', 'hex', 'random')
 
 HEX_RANGE = frozenset('0123456789abcdef')
 
