@@ -40,11 +40,11 @@ class Color(object):
 
     @property
     def rgb(self):
-        raise NotImplemented
+        raise NotImplementedError
 
     @property
     def hsv(self):
-        raise NotImplemented
+        raise NotImplementedError
 
     def multiply(self, other):
         self_rgb = self.rgb
