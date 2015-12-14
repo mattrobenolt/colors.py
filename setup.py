@@ -9,7 +9,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='colors.py',
-    version='0.2.1',
+    version='0.2.2',
     author='Matt Robenolt',
     author_email='matt@ydekproductions.com',
     url='https://github.com/mattrobenolt/colors.py',
