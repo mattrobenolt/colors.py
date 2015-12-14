@@ -1,5 +1,5 @@
 clean:
-	rm -f *.egg-info
+	rm -rf *.egg-info
 	rm -rf dist
 
 publish:
