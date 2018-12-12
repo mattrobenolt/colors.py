@@ -50,7 +50,7 @@ Convert colors between rgb, hsv, and hex, perform arithmetic, blend modes, and g
 ### Convert it to RGB
 ```python
 >>> hsv(0, 1, 1).rgb
-<RGBColor red: 255, green: 0.0, blue: 0.0>
+<RGBColor red: 255, green: 0, blue: 0>
 ```
 ### Gimme a random color, any color!
 ```python
@@ -65,7 +65,7 @@ Convert colors between rgb, hsv, and hex, perform arithmetic, blend modes, and g
 ### Coerce RGB/HSV objects to a string for formatting
 ```python
 >>> 'style="color: rgb(%s)"' % random().rgb
-'style="color: rgb(80.3414147839, 124.403236079, 71.4620739603)"'
+'style="color: rgb(80, 124, 71)"'
 ```
 ### Compare color equality
 ```python
@@ -79,7 +79,7 @@ True
 ### Multiply
 ```python
 >>> hex('ff9999') * hex('cccccc')
-<RGBColor red: 204.0, green: 122.4, blue: 122.4>
+<RGBColor red: 204, green: 122, blue: 122>
 >>> _.hex
 <HexColor red: cc, green: 7a, blue: 7a>
 >>> rgb(100, 100, 100).multiply(hsv(0, 1, 1)).hex
@@ -102,9 +102,9 @@ True
 ### Divide
 ```python
 >>> hex('ff9999') / rgb(10, 10, 10)
-<RGBColor red: 25.5, green: 15.3, blue: 15.3>
+<RGBColor red: 26, green: 15, blue: 15>
 >>> hex('aaffcc').divide(rgb(10, 10, 10))
-<RGBColor red: 17.0, green: 25.5, blue: 20.4>
+<RGBColor red: 17, green: 26, blue: 20>
 >>> rgb(100, 100, 100) / hex('00ffff')
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
