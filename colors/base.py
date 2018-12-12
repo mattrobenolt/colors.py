@@ -13,25 +13,17 @@ __all__ = ('Color', 'HSVColor', 'RGBColor', 'HexColor', 'ColorWheel',
 HEX_RANGE = frozenset('0123456789abcdef')
 
 
-class _ColorMetaClass(type):
-    """
-    Metaclass for Color to simply map the cls.Meta.properties to getters.
-
-    >>> RGBColor(r=150, g=0, b=100).red
-    150
-    """
-    def __new__(cls, name, bases, attrs):
-        # Check for internal Meta class providing a property map
-        if 'Meta' in attrs and hasattr(attrs['Meta'], 'properties'):
-            for index, prop in enumerate(attrs['Meta'].properties):
+def color_decorator(cls):
+    attributes = cls.__dict__
+    if 'Meta' in attributes and hasattr(attributes['Meta'], 'properties'):
+        for index, prop in enumerate(attributes['Meta'].properties):
                 # Assign pretty getters to each property name
-                attrs[prop] = property(lambda self, index=index: self._color[index])
-        return super(_ColorMetaClass, cls).__new__(cls, name, bases, attrs)
+            setattr(cls, prop, property(lambda self, index=index: self._color[index]))
+    return cls
 
 
 class Color(object):
     """ Abstract base class for all color types. """
-    __metaclass__ = _ColorMetaClass
 
     @property
     def hex(self):
@@ -157,6 +149,7 @@ class Color(object):
         return base % (self.__class__.__name__, ', '.join(properties))
 
 
+@color_decorator
 class HSVColor(Color):
     """ Hue Saturation Value """
 
@@ -184,6 +177,7 @@ class HSVColor(Color):
         properties = ('hue', 'saturation', 'value')
 
 
+@color_decorator
 class RGBColor(Color):
     """ Red Green Blue """
 
