@@ -4,6 +4,7 @@ colors.base
 Convert colors between rgb, hsv, and hex, perform arithmetic, blend modes,
 and generate random colors within boundaries.
 """
+from __future__ import print_function
 import colorsys
 import random as random_
 
@@ -13,30 +14,22 @@ __all__ = ('Color', 'HSVColor', 'RGBColor', 'HexColor', 'ColorWheel',
 HEX_RANGE = frozenset('0123456789abcdef')
 
 
-class _ColorMetaClass(type):
-    """
-    Metaclass for Color to simply map the cls.Meta.properties to getters.
-
-    >>> RGBColor(r=150, g=0, b=100).red
-    150
-    """
-    def __new__(cls, name, bases, attrs):
-        # Check for internal Meta class providing a property map
-        if 'Meta' in attrs and hasattr(attrs['Meta'], 'properties'):
-            for index, prop in enumerate(attrs['Meta'].properties):
-                # Assign pretty getters to each property name
-                attrs[prop] = property(lambda self, index=index: self._color[index])
-        return super(_ColorMetaClass, cls).__new__(cls, name, bases, attrs)
+def color_decorator(cls):
+    attributes = cls.__dict__
+    if 'Meta' in attributes and hasattr(attributes['Meta'], 'properties'):
+        for index, prop in enumerate(attributes['Meta'].properties):
+            # Assign pretty getters to each property name
+            setattr(cls, prop, property(lambda self, index=index: self._color[index]))
+    return cls
 
 
 class Color(object):
     """ Abstract base class for all color types. """
-    __metaclass__ = _ColorMetaClass
 
     @property
     def hex(self):
         """ Hex is used the same way for all types. """
-        return HexColor('%02x%02x%02x' % tuple(self.rgb))
+        return HexColor('{:02x}{:02x}{:02x}'.format(*[int(x) for x in self.rgb]))
 
     @property
     def rgb(self):
@@ -80,6 +73,7 @@ class Color(object):
         )
 
     __div__ = divide
+    __truediv__ = divide
 
     def subtract(self, other):
         self_rgb = self.rgb
@@ -135,7 +129,7 @@ class Color(object):
 
         >>> list(rgb(100, 50, 0))
         [100, 50, 0]
-        >>> for i in rgb(100, 50, 0): print i
+        >>> for i in rgb(100, 50, 0): print(i)
         100
         50
         0
@@ -149,14 +143,14 @@ class Color(object):
         return ', '.join(map(str, self._color))
 
     def __repr__(self):
-        base = u'<%s %s>'
+        base = u'<{} {}>'
         properties = [
-            '%s: %s' % (prop, getattr(self, prop)) \
-                for prop in self.Meta.properties
+            '{}: {}'.format(prop, getattr(self, prop)) for prop in self.Meta.properties
         ]
-        return base % (self.__class__.__name__, ', '.join(properties))
+        return base.format(self.__class__.__name__, ', '.join(properties))
 
 
+@color_decorator
 class HSVColor(Color):
     """ Hue Saturation Value """
 
@@ -184,6 +178,7 @@ class HSVColor(Color):
         properties = ('hue', 'saturation', 'value')
 
 
+@color_decorator
 class RGBColor(Color):
     """ Red Green Blue """
 
@@ -234,7 +229,7 @@ class HexColor(RGBColor):
         return self
 
     def __str__(self):
-        return '%s%s%s' % self._color
+        return '{}{}{}'.format(*self._color)
 
 
 class ColorWheel(object):
@@ -243,12 +238,12 @@ class ColorWheel(object):
 
     >>> from colors import ColorWheel
     >>> wheel = ColorWheel()
-    >>> print '#%s' % wheel.next().hex
+    >>> print('#{}'.format(wheel.next().hex))
     #cc8b00
     >>> wheel = ColorWheel(start=0.2)
-    >>> print '#%s' % wheel.next().hex
+    >>> print('#{}'.format(wheel.next().hex))
     #00cc26
-    >>> print '#%s' % wheel.next().hex
+    >>> print('#{}'.format(wheel.next().hex))
     #009ecc
     """
     def __init__(self, start=0):
@@ -274,11 +269,12 @@ def random():  # This name might be a bad idea?
     >>> from colors import random
     >>> random()
     <HSVColor hue: 0.310089903395, saturation: 0.765033516918, value: 0.264921257867>
-    >>> print '#%s' % random().hex
+    >>> print('#{}'.format(random().hex))
     #ae47a7
 
     """
     return HSVColor(random_.random(), random_.random(), random_.random())
+
 
 # Simple aliases
 rgb = RGBColor  # rgb(100, 100, 100), or rgb(r=100, g=100, b=100)
