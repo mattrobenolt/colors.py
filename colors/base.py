@@ -188,9 +188,9 @@ class RGBColor(Color):
     """ Red Green Blue """
 
     def __init__(self, r=0, g=0, b=0):
-        self._color = r, g, b
+        self._color = round(r), round(g), round(b)
         for c in self._color:
-            if c < 0 or c > 255:
+            if 0 > c > 255:
                 raise ValueError('Color values must be between 0 and 255')
 
     @property
