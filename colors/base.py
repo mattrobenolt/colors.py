@@ -238,7 +238,7 @@ class HexColor(RGBColor):
 
 
 class ColorWheel(object):
-    """ Iterate random colors disributed relatively evenly
+    """ Iterate random colors distributed relatively evenly
     around the color wheel.
 
     >>> from colors import ColorWheel
